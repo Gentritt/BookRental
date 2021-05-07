@@ -197,6 +197,7 @@
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PartialButtons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -260,6 +261,10 @@
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Genre\Index.cshtml" />
     <Content Include="Views\Genre\Create.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_CreateButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_PartialButtons.cshtml" />
+    <Content Include="Views\Shared\_TableButtonPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

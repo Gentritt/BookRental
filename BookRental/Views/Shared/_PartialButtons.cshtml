@@ -1,0 +1,9 @@
+﻿@model BookRental.Models.PartialButtons
+
+<a type="button" class="btn @Model.ButtonType btn-sm" href="@Url.Action(Model.Action)@Model.ActionParameter">
+
+	<span class="glyphicon- glyphicon-@Model.Glyph" ></span>
+	<span>@Model.Text</span>
+</a>
+
+
