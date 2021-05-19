@@ -25,7 +25,8 @@ namespace BookRental
 					  ));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
-					  "~/Content/bootstrap.css",
+					  //"~/Content/bootstrap.css",
+					  "~/Content/test.css",
 					  "~/Content/site.css"));
 		}
 	}

@@ -10,10 +10,10 @@
 @Html.Partial("_CreateButtonPartial")
 <br />
 <br />
-
+<link href="~/Content/Site.css" rel="stylesheet" />
 <table class="table table-condensed table-hover">
 
-        <tr>
+        <tr class="table-header">
             <th>
                 @Html.DisplayNameFor(m=> m.Name)
             </th>
@@ -26,8 +26,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(m=> item.Name)
+                <br />
             </td>
-
+           
             <td>
                 @Html.Partial("_TableButtonPartial",new PartialButtons {GenreId = item.Id })
 
