@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BookRental.Models;
+using BookRental.ViewModel;
 
 namespace BookRental.Controllers
 {
@@ -33,14 +34,24 @@ namespace BookRental.Controllers
             {
                 return HttpNotFound();
             }
-            return View(book);
+
+            var model = new BookViewModel
+            {
+                Book = book,
+                Genres = db.Genres.ToList()
+            };
+            return View(model);
         }
 
         // GET: Books/Create
         public ActionResult Create()
         {
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
-            return View();
+            var genre = db.Genres.ToList();
+            var model = new BookViewModel
+            {
+                Genres = genre
+            };
+            return View(model);
         }
 
         // POST: Books/Create
@@ -48,8 +59,26 @@ namespace BookRental.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ISBN,Title,Author,Description,ImageUrl,Avaliability,Price,DateAdded,GenreId,PublicationDate,Pages,ProductDimensions")] Book book)
+        public ActionResult Create(BookViewModel bookVm )
         {
+            var book = new Book
+            {
+                Author = bookVm.Book.Author,
+                Avaliability = bookVm.Book.Avaliability,
+                DateAdded = bookVm.Book.DateAdded,
+                Description = bookVm.Book.Description,
+                GenreId = bookVm.Book.GenreId,
+                Genre = bookVm.Book.Genre,
+                ImageUrl = bookVm.Book.ImageUrl,
+                ISBN = bookVm.Book.ISBN,
+                Pages = bookVm.Book.Pages,
+                Price = bookVm.Book.Price,
+                ProductDimensions = bookVm.Book.ProductDimensions,
+                PublicationDate = bookVm.Book.PublicationDate,
+                Title = bookVm.Book.Title
+
+            };
+
             if (ModelState.IsValid)
             {
                 db.Books.Add(book);
@@ -57,8 +86,8 @@ namespace BookRental.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
-            return View(book);
+            bookVm.Genres = db.Genres.ToList();
+            return View(bookVm);
         }
 
         // GET: Books/Edit/5
@@ -73,25 +102,48 @@ namespace BookRental.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
-            return View(book);
+            var model = new BookViewModel
+            {
+                Book = book,
+                Genres = db.Genres.ToList()
+            };
+            return View(model);
         }
 
         // POST: Books/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598. 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ISBN,Title,Author,Description,ImageUrl,Avaliability,Price,DateAdded,GenreId,PublicationDate,Pages,ProductDimensions")] Book book)
+        public ActionResult Edit(BookViewModel bookVm)
         {
+
+            var book = new Book
+            {
+                Id = bookVm.Book.Id,
+                Author = bookVm.Book.Author,
+                Avaliability = bookVm.Book.Avaliability,
+                DateAdded = bookVm.Book.DateAdded,
+                Description = bookVm.Book.Description,
+                GenreId = bookVm.Book.GenreId,
+                Genre = bookVm.Book.Genre,
+                ImageUrl = bookVm.Book.ImageUrl,
+                ISBN = bookVm.Book.ISBN,
+                Pages = bookVm.Book.Pages,
+                Price = bookVm.Book.Price,
+                ProductDimensions = bookVm.Book.ProductDimensions,
+                PublicationDate = bookVm.Book.PublicationDate,
+                Title = bookVm.Book.Title
+
+            };
             if (ModelState.IsValid)
             {
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
-            return View(book);
+            bookVm.Genres = db.Genres.ToList();
+            return View(bookVm);
         }
 
         // GET: Books/Delete/5
@@ -106,7 +158,13 @@ namespace BookRental.Controllers
             {
                 return HttpNotFound();
             }
-            return View(book);
+
+            var model = new BookViewModel
+            {
+                Book = book,
+                Genres = db.Genres.ToList()
+            };
+            return View(model);
         }
 
         // POST: Books/Delete/5
