@@ -9,7 +9,7 @@ namespace BookRental.Extensions
 	public static class ThumbnailExtensions
 	{
 
-		public static IEnumerable<ThumbnailModel> GetBookThumbnail(this List<ThumbnailModel> thumbnails, ApplicationDbContext db = null)
+		public static IEnumerable<ThumbnailModel> GetBookThumbnail(this List<ThumbnailModel> thumbnails, ApplicationDbContext db = null,string search = null)
 		{
 			//Gets Books from db.Books table in database and adds them as thumbnails;
 			try
@@ -24,6 +24,10 @@ namespace BookRental.Extensions
 								  ImageUrl = b.ImageUrl,
 								  Link = "/BookDetail/Index"+b.Id
 							  }).ToList();
+				if(search != null)
+				{
+					return thumbnails.Where(t => t.Title.ToLower().Contains(search.ToLower())).OrderBy(b=> b.Title);
+				}
 
 
 			}
