@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -12,6 +13,22 @@ namespace BookRental.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        public ICollection<MembershipType> MembershipTypes { get; set; }
+        [Required]
+		public int MembershipTypeId { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="{0:MMM dd yyyy}")]
+        public DateTime Birthdate { get; set; }
+
+        [Required]
+        public string Id { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
     }
 
     public class ManageLoginsViewModel

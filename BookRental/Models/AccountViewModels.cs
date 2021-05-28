@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BookRental.Extensions;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookRental.Models
@@ -68,6 +70,22 @@ namespace BookRental.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        public string Firstname { get; set; }
+        
+        public bool Disabled { get; set; }
+        public ICollection<MembershipType> MembershipTypes { get; set; }
+        [Required]
+        public int MembershipTypeId { get; set; }
+        [Required]
+        public string Lastname { get; set; }
+        [Required]
+        [DateRangeAttribute("01/01/1990")]
+        [Display(Name = "Birth Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd yyyy}")]
+        public DateTime Birthdate { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

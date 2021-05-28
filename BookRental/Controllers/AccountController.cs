@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookRental.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BookRental.Controllers
 {
@@ -17,15 +18,17 @@ namespace BookRental.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _db;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext db )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            db = _db;
         }
 
         public ApplicationSignInManager SignInManager
@@ -138,8 +141,20 @@ namespace BookRental.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
+
+            
         {
-            return View();
+			using (var db = ApplicationDbContext.Create())
+			{
+                RegisterViewModel newUser = new RegisterViewModel
+                {
+                    MembershipTypes = db.MembershipTypes.ToList(),
+                    Birthdate = DateTime.Now
+                };
+                return View(newUser);
+            }
+
+           
         }
 
         //
@@ -151,23 +166,50 @@ namespace BookRental.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Birthdate = model.Birthdate,
+                    Firstname = model.Firstname,
+                    MembershipTypeId = model.MembershipTypeId,
+                    Disable = false
+            
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    using (var db = ApplicationDbContext.Create())
+                    {
+                        model.MembershipTypes = db.MembershipTypes.ToList();
+                        var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                        var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-                    return RedirectToAction("Index", "Home");
+                        var membership = model.MembershipTypes.SingleOrDefault(m => m.Id == model.MembershipTypeId).Name.ToString();
+                        //For admin
+                        if (membership.ToLower().Contains("admin"))
+                        {
+                            await roleManager.CreateAsync(new IdentityRole("Admin"));
+                            await UserManager.AddToRoleAsync(user.Id, "Admin");
+                        }
+                        //For Member
+                        else
+                        {
+                            await roleManager.CreateAsync(new IdentityRole("Customer"));
+                            await UserManager.AddToRoleAsync(user.Id, "Customer");
+                        }
+
+                    }
+					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+
+					return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-
+            using (var db = ApplicationDbContext.Create())
+			{
+                model.MembershipTypes = db.MembershipTypes.ToList();
+			}
             // If we got this far, something failed, redisplay form
             return View(model);
         }

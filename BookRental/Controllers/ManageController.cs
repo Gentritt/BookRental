@@ -50,7 +50,7 @@ namespace BookRental.Controllers
             }
         }
 
-        //
+        // 
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -64,16 +64,84 @@ namespace BookRental.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            using(var db = ApplicationDbContext.Create())
+			{
+                var userDb = db.Users.First(u => u.Id.Equals(userId));
+			
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Birthdate = userDb.Birthdate,
+                Firstname = userDb.Firstname,
+                Lastname = userDb.Lastname,
+                Id = userDb.Id,
+                Email = userDb.Email,
+                MembershipTypeId = userDb.MembershipTypeId,
+                MembershipTypes = db.MembershipTypes.ToList()
             };
+          
             return View(model);
+            }
         }
+
+        public async Task<ActionResult> Edit()
+        {
+
+
+            var userId = User.Identity.GetUserId();
+            using (var db = ApplicationDbContext.Create())
+            {
+                var userDb = db.Users.First(u => u.Id.Equals(userId));
+
+                var model = new IndexViewModel
+                {
+                    HasPassword = HasPassword(),
+                    PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                    TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                    Logins = await UserManager.GetLoginsAsync(userId),
+                    BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                    Birthdate = userDb.Birthdate,
+                    Firstname = userDb.Firstname,
+                    Lastname = userDb.Lastname,
+                    Id = userDb.Id,
+                    MembershipTypeId = userDb.MembershipTypeId,
+                    Email = userDb.Email,
+                    MembershipTypes = db.MembershipTypes.ToList()
+                };
+
+                return View(model);
+            }
+        }
+
+
+        //Post/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+		public ActionResult Edit(IndexViewModel model)
+		{
+            using(var db = ApplicationDbContext.Create())
+			{
+				if (ModelState.IsValid)
+				{
+                    var userDb = db.Users.FirstOrDefault(u => u.Id.Equals(model.Id));
+                    userDb.Firstname = model.Firstname;
+                    userDb.Lastname = model.Lastname;
+                    userDb.Birthdate = model.Birthdate;
+                    userDb.Email = model.Email;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+				}
+				else
+				{
+                    model.MembershipTypes = db.MembershipTypes.ToList();
+				}
+			}
+			return View(model);
+		}
 
         //
         // POST: /Manage/RemoveLogin
