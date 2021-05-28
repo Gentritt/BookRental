@@ -196,12 +196,21 @@
     <Compile Include="Migrations\202105191314599_AddPublisherToBook.Designer.cs">
       <DependentUpon>202105191314599_AddPublisherToBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105281337200_addMembershipTypeToDatabase.cs" />
+    <Compile Include="Migrations\202105281337200_addMembershipTypeToDatabase.Designer.cs">
+      <DependentUpon>202105281337200_addMembershipTypeToDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105281337583_SeedMembershipType.cs" />
+    <Compile Include="Migrations\202105281337583_SeedMembershipType.Designer.cs">
+      <DependentUpon>202105281337583_SeedMembershipType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\PartialButtons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -310,6 +319,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105191314599_AddPublisherToBook.resx">
       <DependentUpon>202105191314599_AddPublisherToBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105281337200_addMembershipTypeToDatabase.resx">
+      <DependentUpon>202105281337200_addMembershipTypeToDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105281337583_SeedMembershipType.resx">
+      <DependentUpon>202105281337583_SeedMembershipType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
