@@ -52,6 +52,7 @@ namespace BookRental.Controllers
 
         // 
         // GET: /Manage/Index
+        [ValidateInput(false)]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
