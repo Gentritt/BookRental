@@ -234,6 +234,7 @@
     <Content Include="Content\Images\Spider.png" />
     <Content Include="Content\Images\Sunset.png" />
     <Content Include="Content\test.css" />
+    <Content Include="Content\thumbnail.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
