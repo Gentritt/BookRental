@@ -68,7 +68,7 @@ namespace BookRental.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(UserViewModel user)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
 				UserViewModel model = new UserViewModel
 				{
@@ -84,7 +84,7 @@ namespace BookRental.Controllers
 				return View("Edit", model);
 			}
 			else
-			{
+			{	
 				//This will retrieve the database object and then update the database object with the user objects.
 				var userinDb = db.Users.Single(u => u.Id.Equals(user.Id));
 				userinDb.Firstname = user.Firstname;
@@ -93,13 +93,10 @@ namespace BookRental.Controllers
 				userinDb.Email = user.Email;
 				userinDb.MembershipTypeId = user.MembershipTypeId;
 				userinDb.Disable = user.Disable;
-
-				
 			}
 			db.SaveChanges();
+			return RedirectToAction("Index", "User");
 
-			return RedirectToAction("Index", "Users");
-			
 		}
 		public ActionResult Details(string id)
 		{
