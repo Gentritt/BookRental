@@ -58,11 +58,11 @@ namespace BookRental
 			   appId: "305734507766131",
 			   appSecret: "a01e1108143e1eb44f7eb5a0b93f5962");
 
-			//app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-			//{
-			//    ClientId = "",
-			//    ClientSecret = ""
-			//});
+			app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+			{
+				ClientId = "818926647255-406fgbm0tp5s8ib8k4l4f9tlm8stgpl3.apps.googleusercontent.com",
+				ClientSecret = "RwZPxUmCPziKtGlh0vAc53mF"
+            });
 		}
     }
 }
