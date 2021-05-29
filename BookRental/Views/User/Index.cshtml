@@ -1,0 +1,65 @@
+﻿
+@model IEnumerable<BookRental.ViewModel.UserViewModel>
+@using BookRental.Models;
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<br />
+<br />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<table class="table table-condensed table-hover">
+
+	<tr class="table-header">
+		<th>
+			@Html.DisplayNameFor(m => m.Firstname)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.LastName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.Birthdate)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.Email)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.Disable)
+		</th>
+		<th></th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+<tr>
+	<td>
+		@Html.DisplayFor(m => item.Firstname)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.LastName)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.Birthdate)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.Email)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.Disable, new {@class = "disabled"})
+		<br />
+	</td>
+
+	<td>
+		@Html.Partial("_TableButtonPartial", new PartialButtons { UserId = item.Id})
+
+	</td>
+</tr>
+	}
+</table>
