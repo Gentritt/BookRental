@@ -349,10 +349,10 @@
     <Content Include="Views\MembershipTypes\Details.cshtml" />
     <Content Include="Views\MembershipTypes\Edit.cshtml" />
     <Content Include="Views\MembershipTypes\Index.cshtml" />
+    <Content Include="Views\BookDetail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\BookDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
