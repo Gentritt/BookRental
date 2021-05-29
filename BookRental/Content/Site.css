@@ -27,7 +27,6 @@ textarea {
 .table-header{
     background-color: #cee7ff;
     color:#03417D;
-
 }
 
 .form-border{
@@ -36,5 +35,27 @@ textarea {
     padding-top: 20px;
     padding-bottom: 10px;
     padding-left:10px;
-
 }
+.footer {
+    position: fixed;
+    bottom: 0;
+}
+    
+/*
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #03417D;
+    color: #fff;
+}
+.footer > .container {
+        padding-left: 15px;
+        padding-right: 15px;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}*/

@@ -230,9 +230,14 @@
     <Compile Include="Migrations\202105281345331_AddFieldsToMembershipTable.Designer.cs">
       <DependentUpon>202105281345331_AddFieldsToMembershipTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105291628454_AddBookRentModel.cs" />
+    <Compile Include="Migrations\202105291628454_AddBookRentModel.Designer.cs">
+      <DependentUpon>202105291628454_AddBookRentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookRent.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -370,6 +375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105281345331_AddFieldsToMembershipTable.resx">
       <DependentUpon>202105281345331_AddFieldsToMembershipTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105291628454_AddBookRentModel.resx">
+      <DependentUpon>202105291628454_AddBookRentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
