@@ -10,6 +10,15 @@ namespace BookRental.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Birth Date")]
+        [DateRange("01/01/1990")]
+        public DateTime Birthdate { get; set; }
+        public bool? Disabled { get; set; }
+        public ICollection<MembershipType> MembershipTypes { get; set; }
+        [Required]
+        public int MembershipTypeId { get; set; }
     }
 
     public class ExternalLoginListViewModel
