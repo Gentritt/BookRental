@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookDetailController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -234,6 +235,10 @@
     <Compile Include="Migrations\202105291628454_AddBookRentModel.Designer.cs">
       <DependentUpon>202105291628454_AddBookRentModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105291631214_addRentalDurationToBookRent.cs" />
+    <Compile Include="Migrations\202105291631214_addRentalDurationToBookRent.Designer.cs">
+      <DependentUpon>202105291631214_addRentalDurationToBookRent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -246,6 +251,7 @@
     <Compile Include="Models\ThumbnailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\BookRentalViewModel.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />
     <Compile Include="ViewModel\ThumbnailBoxView.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
@@ -346,6 +352,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BookDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -378,6 +385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105291628454_AddBookRentModel.resx">
       <DependentUpon>202105291628454_AddBookRentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105291631214_addRentalDurationToBookRent.resx">
+      <DependentUpon>202105291631214_addRentalDurationToBookRent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
