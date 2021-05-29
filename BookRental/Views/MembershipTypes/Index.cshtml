@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<BookRental.Models.MembershipType>
+@using BookRental.Models;
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.Partial("_CreateButtonPartial")
+<br />
+<br />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<table class="table table-condensed table-hover">
+
+	<tr class="table-header">
+		<th>
+			@Html.DisplayNameFor(m => m.Name)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.SignUpFee)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.ChargeRateOneMonth)
+		</th>
+		<th>
+			@Html.DisplayNameFor(m => m.ChargeRateSixMonth)
+		</th>
+		<th></th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+<tr>
+	<td>
+		@Html.DisplayFor(m => item.Name)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.SignUpFee)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.ChargeRateOneMonth)
+		<br />
+	</td>
+	<td>
+		@Html.DisplayFor(m => item.ChargeRateSixMonth)
+		<br />
+	</td>
+
+	<td>
+		@Html.Partial("_TableButtonPartial", new PartialButtons { MembershipTypeId = item.Id })
+
+	</td>
+</tr>
+	}
+</table>

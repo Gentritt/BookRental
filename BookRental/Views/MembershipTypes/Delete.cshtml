@@ -1,0 +1,74 @@
+﻿@model BookRental.Models.MembershipType
+@{
+	ViewBag.Title = "Delete";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+
+		<h3>Are You Sure you want to Delete this genre</h3>
+		<hr />
+		<div class="form-border">
+			<fieldset disabled>
+				<div class="row" style="padding-bottom:5px; padding-top: 5px;">
+
+					<div class="col-md-2">
+						@Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label" })
+
+					</div>
+
+					<div class="col-md-10">
+
+						@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:5px; padding-top: 5px;">
+
+					<div class="col-md-2">
+						@Html.LabelFor(m => m.SignUpFee, htmlAttributes: new { @class = "control-label" })
+
+					</div>
+
+					<div class="col-md-10">
+
+						@Html.TextBoxFor(m => m.SignUpFee, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:5px; padding-top: 5px;">
+
+					<div class="col-md-2">
+						@Html.LabelFor(m => m.ChargeRateOneMonth, htmlAttributes: new { @class = "control-label" })
+
+					</div>
+
+					<div class="col-md-10">
+
+						@Html.TextBoxFor(m => m.ChargeRateOneMonth, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="row" style="padding-bottom:5px; padding-top: 5px;">
+
+					<div class="col-md-2">
+						@Html.LabelFor(m => m.ChargeRateSixMonth, htmlAttributes: new { @class = "control-label" })
+
+					</div>
+
+					<div class="col-md-10">
+
+						@Html.TextBoxFor(m => m.ChargeRateSixMonth, new { @class = "form-control" })
+					</div>
+				</div>
+			</fieldset>
+
+		</div>
+		<br />
+	</div>
+
+
+	<div>
+		@Html.Partial("_BackToListButtonPartial")
+		<input type="submit" value="Delete" class="btn btn-sm btn-danger" />
+	</div>
+}

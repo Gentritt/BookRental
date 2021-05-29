@@ -157,8 +157,9 @@ namespace BookRental.Controllers
 		{
 			if (disposing)
 			{
-
+				db.Dispose();
 			}
+			base.Dispose(disposing);
 		}
 	}
 }
