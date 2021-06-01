@@ -132,7 +132,49 @@ namespace BookRental.Controllers
 			}
 			return View();
 		}
+		[HttpPost]
+		public ActionResult Reserve(BookRentalViewModel book)
+		{
 
+			var userid = User.Identity.GetUserId();
+			Book booktoRent = db.Books.Find(book.BookId);
+
+			double rentalprice = 0;
+
+			if (userid != null)
+			{
+				var chargerate = from u in db.Users
+								 join m in db.MembershipTypes on u.MembershipTypeId equals m.Id
+								 where u.Id.Equals(userid)
+								 select new { m.ChargeRateOneMonth, m.ChargeRateSixMonth };
+
+				if(book.RentalDuration == "6")
+				{
+					rentalprice = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateSixMonth);
+				}
+				else
+				{
+					rentalprice = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateOneMonth);
+				}
+
+				BookRent bookRent = new BookRent
+				{
+					BookId = booktoRent.Id,
+					UserId = userid,
+					RentalDuration = book.RentalDuration,
+					Price = rentalprice,
+					Status = BookRent.StatusEnum.Requested
+				};
+
+				db.BookRents.Add(bookRent);
+				var bookInDb = db.Books.SingleOrDefault(c => c.Id == book.BookId);
+				bookInDb.Avaliability -= 1;
+				db.SaveChanges();
+				return RedirectToAction("Index", "BookRent");
+			}
+
+			return View();
+		}
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)

@@ -39,7 +39,7 @@
 				listItems.Add(new SelectListItem
 				{
 					Text = "One Month",
-					Value = "1"
+					Value = "1" 
 				});
 				listItems.Add(new SelectListItem
 				{
@@ -75,8 +75,8 @@
 				}
 				else
 				{
-					<button type="submit" class="btn btn-danger">
-						<span class="glyphicon glyphicon-thumbs-down">Unavaliable </span>
+					<button type="submit" class="btn btn-danger" disabled>
+						<span class="glyphicon glyphicon-thumbs-down ">Unavaliable </span>
 					</button>
 				}
 
@@ -103,7 +103,7 @@
 						if (User.IsInRole("admin") && Model.Avaliability == 0)
 						{
 							//admin user with book not avaliable
-							<button type="submit" disabled class="btn btn-danger">
+							<button type="submit" class="btn disabled btn-danger">
 								<span class="glyphicon glyphicon glyphicon-thumbs-down">Unavaliable</span>
 							</button>
 						}
