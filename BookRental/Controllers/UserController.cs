@@ -37,7 +37,7 @@ namespace BookRental.Controllers
 
 					   };
 			var userlist = user.ToList();
-            return View(userlist);
+			return View(userlist);
         }
 
 		public ActionResult Edit(string id)

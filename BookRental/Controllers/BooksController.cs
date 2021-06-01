@@ -6,14 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Amazon.S3;
+using Amazon.S3.Model;
 using BookRental.Models;
 using BookRental.ViewModel;
+using Newtonsoft.Json;
 
 namespace BookRental.Controllers
 {
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private IAmazonS3 _client;
+		public BooksController()
+		{
+            _client = new AmazonS3Client();
+		}
 
         // GET: Books
         public ActionResult Index()
@@ -62,6 +70,8 @@ namespace BookRental.Controllers
         [ValidateInput(false)]
         public ActionResult Create(BookViewModel bookVm )
         {
+
+
             var book = new Book
             {
                 Author = bookVm.Book.Author,
@@ -85,6 +95,14 @@ namespace BookRental.Controllers
             {
                 db.Books.Add(book);
                 db.SaveChanges();
+
+                //_client.PutObject(new PutObjectRequest
+                //{
+                //    BucketName = "riinvest",
+                //    Key = $"gent/books/{book.ISBN}.json",
+                //    ContentBody = JsonConvert.SerializeObject(book)
+                //});
+
                 return RedirectToAction("Index");
             }
 

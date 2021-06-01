@@ -1,6 +1,7 @@
 ﻿using BookRental.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -13,13 +14,14 @@ namespace BookRental.ViewModel
 		//Book Details
 		public int Id { get; set; }
 		public int BookId { get; set; }
-		public int ISBN { get; set; }
+		public string ISBN { get; set; }
 		public string Title { get; set; }
 		public string Author { get; set; }
 		public string Description { get; set; }
 		[DataType(DataType.ImageUrl)]
 		public string ImageUrl { get; set; }
 		[Range(0, 1000)]
+		[DisplayName("Availability")]
 		public int Avaliability { get; set; }
 		[DataType(DataType.Currency)]
 		public double Price { get; set; }
@@ -65,6 +67,7 @@ namespace BookRental.ViewModel
 
 		//User Details
 		public string UserId { get; set; }
+		public string Email { get; set; }
 
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0: MMM dd yyyy}")]

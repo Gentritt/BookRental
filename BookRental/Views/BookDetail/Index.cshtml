@@ -51,32 +51,36 @@
 			@if (Model.rentalPriceOneMonth != 0 && Model.rentalPriceSixMonth != 0)
 			{
 				//User is logged in and is not an admin
-				<div class="form-control" style="height:350px;">
-					<div class="input-group" style="height:30px;">
-						<label>MRSP: </label>
-						<label id="lblMRSP" style="font-weight:normal;">$@(Model.Price)</label><br />
-					</div>
-					<hr />
-					<div class="input-group" style="height:90px;">
-						<label>Rental Price: </label><br />
-						<label id="lblOneMonth" style="font-weight:normal;">One Month: $@(Model.rentalPriceOneMonth)</label><br />
-						<label id="lblSixMonth" style="font-weight:normal;">Six Month: $@(Model.rentalPriceSixMonth)</label>
-					</div>
-					<br />
-					<label>Select your Rental Duration: </label><br />
-					@Html.DropDownListFor(m => m.RentalDuration, listItems, new { @class = "form-control" })
-					<span style="font-size:12px;">Reserve before 3pm for same day pickup.</span>
+			<div class="form-control" style="height:350px;">
+				<div class="input-group" style="height:30px;">
+					<label>MRSP: </label>
+					<label id="lblMRSP" style="font-weight:normal;">$@(Model.Price)</label><br />
+				</div>
+				<hr />
+				<div class="input-group" style="height:90px;">
+					<label>Rental Price: </label><br />
+					<label id="lblOneMonth" style="font-weight:normal;">One Month: $@(Model.rentalPriceOneMonth)</label><br />
+					<label id="lblSixMonth" style="font-weight:normal;">Six Month: $@(Model.rentalPriceSixMonth)</label>
+				</div>
+				<br />
+				<label>Select your Rental Duration: </label><br />
+				@Html.DropDownListFor(m => m.RentalDuration, listItems, new { @class = "form-control" })
+				<span style="font-size:12px;">Reserve before 3pm for same day pickup.</span>
 
-					@if (Model.Avaliability > 0)
-					{
-						<button type="submit" class="btn btn-primary">
-							<span class="glyphicon glyphicon-thumbs-up">Reserve </span>
-						</button>
-					}
+				@if (Model.Avaliability > 0)
+				{
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-thumbs-up">Reserve </span>
+					</button>
+				}
+				else
+				{
 					<button type="submit" class="btn btn-danger">
 						<span class="glyphicon glyphicon-thumbs-down">Unavaliable </span>
 					</button>
-				</div>
+				}
+
+			</div>
 			}
 
 			else
@@ -89,15 +93,14 @@
 						<label id="lblMRSP" style="font-weight:normal;">$@(Model.Price)</label><br />
 					</div>
 					<hr />
-					@if (User.IsInRole("Admin") && Model.Avaliability == 0)
+					@if (User.IsInRole("Admin") && Model.Avaliability > 0)
 					{
 						@Html.ActionLink("Create Rental", "Create", "BookRent",
-					   new { isbn = Model.ISBN, title = Model.Title }, new { @class = "btn btn-primary" }
-					   )
+					   new { isbn = Model.ISBN, title = Model.Title }, new { @class = "btn btn-primary" })
 					}
 					else
 					{
-						if (User.IsInRole("Admin") && Model.Avaliability == 0)
+						if (User.IsInRole("admin") && Model.Avaliability == 0)
 						{
 							//admin user with book not avaliable
 							<button type="submit" disabled class="btn btn-danger">
