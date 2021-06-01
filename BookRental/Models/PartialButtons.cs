@@ -18,6 +18,7 @@ namespace BookRental.Models
 		public int? BookId { get; set; }
 		public int? CustomerId { get; set; }
 		public int? MembershipTypeId { get; set; }
+		public int? BookRentalId { get; set; }
 		public string UserId { get; set; }
 
 		public string ActionParameter
@@ -42,7 +43,11 @@ namespace BookRental.Models
 				{
 					param.Append(String.Format("{0}", MembershipTypeId));
 				}
-				if(UserId !=null && UserId.Trim().Length > 0)
+				if (BookRentalId != null && BookRentalId > 0)
+				{
+					param.Append(String.Format("{0}", BookRentalId));
+				}
+				if (UserId !=null && UserId.Trim().Length > 0)
 				{
 					param.Append(string.Format("{0}", UserId));
 				}

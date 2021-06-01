@@ -1,5 +1,6 @@
 ﻿using BookRental.Models;
 using BookRental.ViewModel;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,54 @@ namespace BookRental.Controllers
 		}
         public ActionResult Index()
         {
-            return View();
+			string userid = User.Identity.GetUserId();
+
+			var model = from br in db.BookRents
+						join b in db.Books
+						on br.BookId equals b.Id
+						join u in db.Users on br.UserId equals u.Id
+						//Joining all the tables, and then returnin the bookrentalviewmodel object to the view.
+
+						select new BookRentalViewModel
+						{
+							BookId = b.Id,
+							RentalPrice = br.Price,
+							Price = b.Price,
+							Pages = b.Pages,
+							FirstName = u.Firstname,
+							LastName = u.Lastname,
+							Birthdate = u.Birthdate,
+							ScheduleEndDate = br.ScheduleEndDate,
+							Author = b.Author,
+							Avaliability = b.Avaliability,
+							DateAdded = b.DateAdded,
+							Description = b.Description,
+							Email = u.Email,
+							GenreId = b.GenreId,
+							Genre = db.Genres.Where(g => g.Id.Equals(b.GenreId)).FirstOrDefault(),
+							ISBN = b.ISBN,
+							ImageUrl = b.ImageUrl,
+							ProductDimensions = b.ProductDimensions,
+							PublicationDate = b.PublicationDate,
+							Publisher = b.Publisher,
+							RentalDuration = br.RentalDuration,
+							Status = br.Status.ToString(),
+							Title = b.Title,
+							UserId = u.Id,
+							Id = br.Id,
+							StartDate = br.StartDate
+						};
+			if (!User.IsInRole("Admin"))
+			{
+				model = model.Where(u => u.UserId.Equals(userid));
+			}
+
+            return View(model.ToList()); 
         }
 
-		public ActionResult Create(string title = null,string isbn = null)
+		public ActionResult Create(string title = null,int isbn = 0)
 		{
-			if(title != null && isbn != null)
+			if(title != null && isbn !=0)
 			{
 				BookRentalViewModel model = new BookRentalViewModel
 				{

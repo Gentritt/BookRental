@@ -45,7 +45,7 @@ namespace BookRental.Controllers
 			BookRentalViewModel model = new BookRentalViewModel
 			{
 				BookId = bookmodel.Id,
-				ISBN = bookmodel.ISBN.ToString(),
+				ISBN = bookmodel.ISBN,
 				Author = bookmodel.Author,
 				Avaliability = bookmodel.Avaliability,
 				DateAdded = bookmodel.DateAdded,
