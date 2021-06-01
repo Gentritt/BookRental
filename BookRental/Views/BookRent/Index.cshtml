@@ -125,8 +125,95 @@
    })
 	</td>
 	<td>
-		@*Action Buttons*@
+		@if (item.Status.ToString().ToLower().Equals("requested") && User.IsInRole("Admin"))
+		{
+			@Html.Partial("_PartialButtons", new PartialButtons
+	   {
+		   Action = "Decline",
+		   ButtonType = "btn-danger",
+		   Glyph = "remove",
+		   BookId = null,
+		   CustomerId = null,
+		   GenreId = null,
+		   UserId = null,
+			MembershipTypeId = null,
+			BookRentalId = item.Id
+	   })
+			@Html.Partial("_PartialButtons", new PartialButtons
+   {
+	   Action = "Approve",
+	   ButtonType = "btn-primary",
+	   Glyph = "ok",
+	   BookId = null,
+	   CustomerId = null,
+	   GenreId = null,
+	   UserId = null,
+		MembershipTypeId = null,
+		BookRentalId = item.Id
+   })
+
+
+		}
+		else
+		{
+			if ((item.Status.ToString().ToLower().Equals("requested") && (User.IsInRole("Customer"))) ||
+			(User.IsInRole("Admin") && !item.Status.ToString().ToLower().Equals("closed")))
+			{
+				@Html.Partial("_PartialButtons", new PartialButtons
+					   {
+						  Action = "Delete",
+						  ButtonType = "btn-danger",
+						  Glyph = "trash",
+						
+						  BookId = null,
+						  CustomerId = null,
+						  GenreId = null,
+						  MembershipTypeId = null,
+						  UserId = null,
+						  BookRentalId = item.Id
+					   })
+			}
+
+
+			if (item.Status.ToString().ToLower().Equals("approved") && User.IsInRole("Admin"))
+			{
+				@Html.Partial("_PartialButtons", new PartialButtons
+				   {
+					  Action = "Pickup",
+					  ButtonType = "btn-primary",
+					  Glyph = "share-alt",
+				
+					  BookId = null,
+					  CustomerId = null,
+					  GenreId = null,
+					  MembershipTypeId = null,
+					  UserId = null,
+					  BookRentalId = item.Id
+				   })
+			}
+			else
+			{
+				if (item.Status.ToString().ToLower().Equals("rented") && User.IsInRole("Admin"))
+				{
+					@Html.Partial("_PartialButtons", new PartialButtons
+							  {
+								 Action = "Return",
+								 ButtonType = "btn-primary",
+								 Glyph = "retweet",
+								
+								 BookId = null,
+								 CustomerId = null,
+								 GenreId = null,
+								 MembershipTypeId = null,
+								 UserId = null,
+								 BookRentalId = item.Id
+							  })
+				}
+			}
+		}
+
+
 	</td>
 </tr>
-	}
+}
 </table>

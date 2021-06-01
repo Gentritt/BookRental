@@ -17,7 +17,7 @@ namespace BookRental.Models
 		[DataType(DataType.Currency)]
 		public byte SignUpFee { get; set; }
 		
-		[Display(Name="Rental Rate")]
+		
 		[Required]
 		public byte ChargeRateOneMonth { get; set; }
 		[Required]
