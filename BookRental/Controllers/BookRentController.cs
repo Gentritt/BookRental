@@ -227,6 +227,37 @@ namespace BookRental.Controllers
 			return RedirectToAction("Index");
 		}
 
+		public ActionResult Approve(int? id)
+		{
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+			}
+			BookRent bookRent = db.BookRents.Find(id);
+			var model = getVM(bookRent);
+			if (model == null)
+				return HttpNotFound();
+			return View("Approve", model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Approve(BookRentalViewModel model)
+		{
+			if (model == null)
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+			if (ModelState.IsValid)
+			{
+				BookRent bookRent = db.BookRents.Find(model.Id);
+
+				bookRent.Status = BookRent.StatusEnum.Approved;
+
+				db.SaveChanges();
+			}
+
+			return RedirectToAction("Index");
+		}
 		private BookRentalViewModel getVM(BookRent book)
 		{
 			Book selectedBook = db.Books.Where(b => b.Id == book.BookId).FirstOrDefault();
