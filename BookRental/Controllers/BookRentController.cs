@@ -150,8 +150,8 @@ namespace BookRental.Controllers
 
 
 
-				var sixmonth = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateSixMonth);
-				var onemonth = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateOneMonth);
+				var sixmonth = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateSixMonth)/100;
+				var onemonth = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateOneMonth)/100;
 				if (book.RentalDuration == "6")
 				{
 					rentalprice = sixmonth;
