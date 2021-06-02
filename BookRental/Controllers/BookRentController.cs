@@ -340,6 +340,39 @@ namespace BookRental.Controllers
 		
 			
 		}
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+			BookRent bookRent = db.BookRents.Find(id);
+			var model = getVM(bookRent);
+			if (model == null)
+				return HttpNotFound();
+			return View("Delete",model);
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[ActionName("Delete")]
+		public ActionResult DeleteConfirmed(int Id)
+		{
+			if (Id == 0)
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+			if (ModelState.IsValid)
+			{
+				BookRent bookRent = db.BookRents.Find(Id);
+				db.BookRents.Remove(bookRent);
+
+				var bookindb = db.Books.Where(b => b.Id == bookRent.BookId).FirstOrDefault();
+				if (bookRent.Status.ToString().ToLower().Equals("rented") || bookRent.Status.ToString().ToLower().Equals("approved"))
+				{
+					bookindb.Avaliability += 1;
+				}
+				db.SaveChanges();
+			}
+
+			return RedirectToAction("Index");
+		}
 		private BookRentalViewModel getVM(BookRent book)
 		{
 			Book selectedBook = db.Books.Where(b => b.Id == book.BookId).FirstOrDefault();
