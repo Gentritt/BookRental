@@ -55,6 +55,7 @@ namespace BookRental.ViewModel
 		public DateTime? ScheduleEndDate { get; set; }
 		[Display(Name = "Additional Charge")]
 		[RegularExpression("^[0-9]*$", ErrorMessage = "AddCharge must be numeric")]
+		[Required]
 		public double? AdditionalCharge { get; set; }
 
 		[Display(Name = "Price")]

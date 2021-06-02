@@ -1,11 +1,13 @@
 ﻿using BookRental.Models;
 using BookRental.ViewModel;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace BookRental.Controllers
 {
@@ -18,7 +20,7 @@ namespace BookRental.Controllers
 		{
             db = ApplicationDbContext.Create();
 		}
-        public ActionResult Index()
+        public ActionResult Index(int? pageNumber, string option = null,string search = null)
         {
 			string userid = User.Identity.GetUserId();
 
@@ -57,12 +59,27 @@ namespace BookRental.Controllers
 							Id = br.Id,
 							StartDate = br.StartDate
 						};
+
+			if(option=="email" && search.Length > 0)
+			{
+				model = model.Where(u => u.Email.Contains(search));
+			}
+			if(option == "name" && search.Length> 0)
+			{
+				model = model.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search));
+			}
+			if(option == "status" && search.Length > 0)
+			{
+				model = model.Where(u => u.Status.Contains(search));
+			}
+
 			if (!User.IsInRole("Admin"))
 			{
 				model = model.Where(u => u.UserId.Equals(userid));
 			}
 
-            return View(model.ToList()); 
+
+            return View(model.ToList().ToPagedList(pageNumber??1,5)); 
         }
 
 		public ActionResult Create(string title = null,int isbn = 0)

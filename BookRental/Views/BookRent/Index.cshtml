@@ -1,9 +1,13 @@
-﻿@model IEnumerable<BookRental.ViewModel.BookRentalViewModel>
+﻿@model IPagedList<BookRental.ViewModel.BookRentalViewModel>
 @using BookRental.Models
+@using PagedList
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Index";
 }
 
+@using (Html.BeginForm("Index", "BookRent", FormMethod.Get))
+{
 
 <div class="row">
     <div class="col-sm-4 ">
@@ -34,12 +38,12 @@
 		</div>
 		<div class="row">
 			<div class="pull-right">
-				<button type="submit" name="submit" value="search" class="btn btn-sm btn-primary">
+				<button type="submit" name="submit" value="Search" class="btn btn-sm btn-primary">
 					<span class="glyphicon glyphicon-search"></span>&nbsp; Search
 				</button>
 			</div>
 			<div class="pull-right">
-				@Html.Editor("search",new {HtmlAttributes = new {@class="form-control input-sm" } })
+				@Html.Editor("search", new { HtmlAttributes = new { @class = "form-control input-sm" } })
 			</div>
 		</div>
 
@@ -51,34 +55,34 @@
 		<th></th>
 		<th></th>
 		<th>
-			@Html.DisplayNameFor(m => m.Name)
+			@Html.DisplayNameFor(m => m.First().Name)
 		</th>
 		<th>
-			@Html.DisplayNameFor(m => m.Title)
+			@Html.DisplayNameFor(m => m.First().Title)
 		</th>
 		<th>
-			@Html.DisplayNameFor(m => m.Email)
+			@Html.DisplayNameFor(m => m.First().Email)
 		</th>
 		<th>
-			@Html.DisplayNameFor(m => m.StartDate)
+			@Html.DisplayNameFor(m => m.First().StartDate)
 		</th>
 		<th>
-			@Html.DisplayNameFor(m => m.ScheduleEndDate)
+			@Html.DisplayNameFor(m => m.First().ScheduleEndDate)
 		</th>
 		<th>
-			@Html.DisplayNameFor(m => m.RentalDuration)
+			@Html.DisplayNameFor(m => m.First().RentalDuration)
 		</th>
 		<th>
-			@Html.DisplayNameFor(m => m.RentalPrice)
+			@Html.DisplayNameFor(m => m.First().RentalPrice)
 		</th>
-		<th>@Html.DisplayNameFor(m=> m.Status)</th>
+		<th>@Html.DisplayNameFor(m => m.First().Status)</th>
 		
 		<th></th>
 		<th></th>
 
 	</tr>
 
-	@foreach(var item in Model)
+	@foreach (var item in Model)
 	{
 <tr>
 	<td>
@@ -109,7 +113,7 @@
 		@Html.DisplayFor(m => item.RentalPrice)
 	</td>
 
-	<td>@Html.DisplayFor(m=> item.Status)</td>
+	<td>@Html.DisplayFor(m => item.Status)</td>
 	<td>
 		@*Details*@
 		@Html.Partial("_PartialButtons", new PartialButtons
@@ -138,21 +142,21 @@
 		   CustomerId = null,
 		   GenreId = null,
 		   UserId = null,
-			MembershipTypeId = null,
-			BookRentalId = item.Id
+		   MembershipTypeId = null,
+		   BookRentalId = item.Id
 	   })
 			@Html.Partial("_PartialButtons", new PartialButtons
-   {
-	   Action = "Approve",
-	   ButtonType = "btn-primary",
-	   Glyph = "ok",
-	   BookId = null,
-	   CustomerId = null,
-	   GenreId = null,
-	   UserId = null,
-		MembershipTypeId = null,
-		BookRentalId = item.Id
-   })
+	   {
+		   Action = "Approve",
+		   ButtonType = "btn-primary",
+		   Glyph = "ok",
+		   BookId = null,
+		   CustomerId = null,
+		   GenreId = null,
+		   UserId = null,
+		   MembershipTypeId = null,
+		   BookRentalId = item.Id
+	   })
 
 
 		}
@@ -162,54 +166,54 @@
 			(User.IsInRole("Admin") && !item.Status.ToString().ToLower().Equals("closed")))
 			{
 				@Html.Partial("_PartialButtons", new PartialButtons
-					   {
-						  Action = "Delete",
-						  ButtonType = "btn-danger",
-						  Glyph = "trash",
-						
-						  BookId = null,
-						  CustomerId = null,
-						  GenreId = null,
-						  MembershipTypeId = null,
-						  UserId = null,
-						  BookRentalId = item.Id
-					   })
+		   {
+			   Action = "Delete",
+			   ButtonType = "btn-danger",
+			   Glyph = "trash",
+
+			   BookId = null,
+			   CustomerId = null,
+			   GenreId = null,
+			   MembershipTypeId = null,
+			   UserId = null,
+			   BookRentalId = item.Id
+		   })
 			}
 
 
 			if (item.Status.ToString().ToLower().Equals("approved") && User.IsInRole("Admin"))
 			{
 				@Html.Partial("_PartialButtons", new PartialButtons
-				   {
-					  Action = "Pickup",
-					  ButtonType = "btn-primary",
-					  Glyph = "share-alt",
-				
-					  BookId = null,
-					  CustomerId = null,
-					  GenreId = null,
-					  MembershipTypeId = null,
-					  UserId = null,
-					  BookRentalId = item.Id
-				   })
+		   {
+			   Action = "Pickup",
+			   ButtonType = "btn-primary",
+			   Glyph = "share-alt",
+
+			   BookId = null,
+			   CustomerId = null,
+			   GenreId = null,
+			   MembershipTypeId = null,
+			   UserId = null,
+			   BookRentalId = item.Id
+		   })
 			}
 			else
 			{
 				if (item.Status.ToString().ToLower().Equals("rented") && User.IsInRole("Admin"))
 				{
 					@Html.Partial("_PartialButtons", new PartialButtons
-							  {
-								 Action = "Return",
-								 ButtonType = "btn-primary",
-								 Glyph = "retweet",
-								
-								 BookId = null,
-								 CustomerId = null,
-								 GenreId = null,
-								 MembershipTypeId = null,
-								 UserId = null,
-								 BookRentalId = item.Id
-							  })
+			   {
+				   Action = "Return",
+				   ButtonType = "btn-primary",
+				   Glyph = "retweet",
+
+				   BookId = null,
+				   CustomerId = null,
+				   GenreId = null,
+				   MembershipTypeId = null,
+				   UserId = null,
+				   BookRentalId = item.Id
+			   })
 				}
 			}
 		}
@@ -217,5 +221,8 @@
 
 	</td>
 </tr>
-}
+	}
 </table>
+
+@Html.PagedListPager(Model, pageNumber => Url.Action("Index", new { pageNumber }))
+}
