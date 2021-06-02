@@ -373,6 +373,7 @@
     <Content Include="Views\BookRent\Decline.cshtml" />
     <Content Include="Views\BookRent\Approve.cshtml" />
     <Content Include="Views\BookRent\PickUp.cshtml" />
+    <Content Include="Views\BookRent\Return.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

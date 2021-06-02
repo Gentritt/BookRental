@@ -148,13 +148,17 @@ namespace BookRental.Controllers
 								 where u.Id.Equals(userid)
 								 select new { m.ChargeRateOneMonth, m.ChargeRateSixMonth };
 
-				if(book.RentalDuration == "6")
+
+
+				var sixmonth = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateSixMonth);
+				var onemonth = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateOneMonth);
+				if (book.RentalDuration == "6")
 				{
-					rentalprice = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateSixMonth);
+					rentalprice = sixmonth;
 				}
 				else
 				{
-					rentalprice = Convert.ToDouble(booktoRent.Price) * Convert.ToDouble(chargerate.ToList()[0].ChargeRateOneMonth);
+					rentalprice = onemonth;
 				}
 
 				BookRent bookRent = new BookRent
@@ -297,6 +301,45 @@ namespace BookRental.Controllers
 
 			return RedirectToAction("Index");
 		}
+
+
+		public ActionResult Return(int? id)
+		{
+			if (id == null)
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+			var bookrent = db.BookRents.Find(id);
+			var model = getVM(bookrent);
+			if (model == null)
+				return HttpNotFound();
+
+			return View("Return",model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Return(BookRentalViewModel model)
+		{
+			//double addCharge = 5;
+			if (model == null)
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+			if (ModelState.IsValid)
+			{
+				BookRent bookRent = db.BookRents.Find(model.Id);
+				bookRent.Status = BookRent.StatusEnum.Closed;
+
+				bookRent.AdditionalCharge = model.AdditionalCharge;
+				bookRent.Price += (Double)bookRent.AdditionalCharge;
+				Book BookInDb = db.Books.Find(bookRent.BookId);
+				BookInDb.Avaliability += 1;
+
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View("Return", model);
+		
+			
+		}
 		private BookRentalViewModel getVM(BookRent book)
 		{
 			Book selectedBook = db.Books.Where(b => b.Id == book.BookId).FirstOrDefault();
@@ -330,7 +373,8 @@ namespace BookRental.Controllers
 				RentalDuration = book.RentalDuration,
 				Status = book.Status.ToString(),
 				Title = selectedBook.Title,
-				UserId = userDetails.ToList()[0].Id
+				UserId = userDetails.ToList()[0].Id,
+				AdditionalCharge = book.AdditionalCharge
 			};
 			return model;
 		}
