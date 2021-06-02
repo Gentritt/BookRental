@@ -258,6 +258,45 @@ namespace BookRental.Controllers
 
 			return RedirectToAction("Index");
 		}
+
+		public ActionResult PickUp(int? id)
+		{
+
+			if (id == null)
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+			BookRent bookRent = db.BookRents.Find(id);
+			var model = getVM(bookRent);
+			if (model == null)
+				return HttpNotFound();
+			return View("PickUp",model);
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult PickUp(BookRentalViewModel model)
+		{
+			if(model == null)
+			{
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+			}
+			if (ModelState.IsValid)
+			{
+				BookRent bookRent = db.BookRents.Find(model.Id);
+				bookRent.Status = BookRent.StatusEnum.Rented;
+				bookRent.StartDate = DateTime.Now;
+				if(bookRent.RentalDuration == "6")
+				{
+					bookRent.ScheduleEndDate = DateTime.Now.AddMonths(Convert.ToInt32("6"));
+				}
+				else
+				{
+					bookRent.ScheduleEndDate = DateTime.Now.AddMonths(Convert.ToInt32("1"));
+				}
+				db.SaveChanges();
+
+			}
+
+			return RedirectToAction("Index");
+		}
 		private BookRentalViewModel getVM(BookRent book)
 		{
 			Book selectedBook = db.Books.Where(b => b.Id == book.BookId).FirstOrDefault();
