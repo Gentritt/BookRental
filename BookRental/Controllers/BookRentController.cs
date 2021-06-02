@@ -9,8 +9,10 @@ using System.Web.Mvc;
 
 namespace BookRental.Controllers
 {
-    public class BookRentController : Controller
+	[Authorize]
+	public class BookRentController : Controller
     {
+		
         private ApplicationDbContext db;
 		public BookRentController()
 		{

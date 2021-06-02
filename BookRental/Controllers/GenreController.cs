@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace BookRental.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class GenreController : Controller
     {
         private static ApplicationDbContext _context;

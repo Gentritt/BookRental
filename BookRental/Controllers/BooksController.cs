@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace BookRental.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

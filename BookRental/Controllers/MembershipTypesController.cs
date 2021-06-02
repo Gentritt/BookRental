@@ -10,6 +10,7 @@ using BookRental.Models;
 
 namespace BookRental.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MembershipTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
