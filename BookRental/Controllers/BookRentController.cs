@@ -116,6 +116,13 @@ namespace BookRental.Controllers
 				{
 					rentalprice = onemonth;
 				}
+				var userIndb = db.Users.SingleOrDefault(m => m.Email == email);
+				if(userIndb.RentalCount == 10)
+				{
+					userIndb.RentalCount++;
+					rentalprice = rentalprice - (rentalprice*20 /100);
+				}
+
 				BookRent modeltoAdd = new BookRent
 				{
 					BookId = bookselected.Id,
@@ -162,7 +169,13 @@ namespace BookRental.Controllers
 				{
 					rentalprice = onemonth;
 				}
-
+				var userInDb = db.Users.SingleOrDefault(c => c.Id == userid);
+				//If User has made 10 rentals, it will get 20% discount 
+				if (userInDb.RentalCount == 10)
+				{
+					userInDb.RentalCount++;
+					rentalprice = rentalprice - (rentalprice * 20 / 100);
+				}
 				BookRent bookRent = new BookRent
 				{
 					BookId = booktoRent.Id,
@@ -226,7 +239,14 @@ namespace BookRental.Controllers
 			if (ModelState.IsValid) { 
 			BookRent bookRent = db.BookRents.Find(book.Id);
 			bookRent.Status = BookRent.StatusEnum.Rejected;
-			Book bookindb = db.Books.Find(bookRent.BookId);
+				var userInDb = db.Users.SingleOrDefault(c => c.Id == bookRent.UserId);
+
+				if (userInDb.RentalCount == 11)
+				{
+					userInDb.RentalCount--;
+				}
+
+				Book bookindb = db.Books.Find(bookRent.BookId);
 			bookindb.Avaliability += 1;
 			db.SaveChanges();
 			}
@@ -329,10 +349,20 @@ namespace BookRental.Controllers
 			{
 				BookRent bookRent = db.BookRents.Find(model.Id);
 				bookRent.Status = BookRent.StatusEnum.Closed;
-
 				bookRent.AdditionalCharge = model.AdditionalCharge;
 				bookRent.Price += (Double)bookRent.AdditionalCharge;
 				Book BookInDb = db.Books.Find(bookRent.BookId);
+				var userindb = db.Users.Single(u => u.Id == bookRent.UserId);
+
+				if(userindb.RentalCount == 11)
+				{
+					userindb.RentalCount = 0;
+				}
+				else
+				{
+					userindb.RentalCount++;
+				}
+
 				BookInDb.Avaliability += 1;
 
 				db.SaveChanges();
@@ -366,9 +396,17 @@ namespace BookRental.Controllers
 				db.BookRents.Remove(bookRent);
 
 				var bookindb = db.Books.Where(b => b.Id == bookRent.BookId).FirstOrDefault();
+				var userindb = db.Users.First(u => u.Id == bookRent.UserId);
 				if (bookRent.Status.ToString().ToLower().Equals("rented") || bookRent.Status.ToString().ToLower().Equals("approved"))
 				{
 					bookindb.Avaliability += 1;
+				}
+				else
+				{
+					if(userindb.RentalCount == 11)
+					{
+						userindb.RentalCount--;
+					}
 				}
 				db.SaveChanges();
 			}

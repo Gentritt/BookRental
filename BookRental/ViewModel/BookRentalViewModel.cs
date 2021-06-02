@@ -69,7 +69,7 @@ namespace BookRental.ViewModel
 		//User Details
 		public string UserId { get; set; }
 		public string Email { get; set; }
-
+		public int RentalCount { get; set; }
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0: MMM dd yyyy}")]
 		[Display(Name = "Birth date")]

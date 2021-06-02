@@ -31,12 +31,12 @@ namespace BookRental.Controllers.API
 				//This will retrieve the customer from database based on email match.
 				var customerQuery = from u in db.Users
 									where u.Email.Contains(query)
-									select new { u.Firstname, u.Lastname, u.Birthdate };
+									select new { u.Firstname, u.Lastname, u.Birthdate,u.RentalCount };
 
-				return Ok(customerQuery.ToList()[0].Firstname + " " + customerQuery.ToList()[0].Lastname + " ;"+ customerQuery.ToList()[0].Birthdate);
+				return Ok(customerQuery.ToList()[0].Firstname + " " + customerQuery.ToList()[0].Lastname + " ;"+ customerQuery.ToList()[0].Birthdate + " ;" + customerQuery.ToList()[0].RentalCount);
 			}
 			return BadRequest();
-
+			
 		}
 		protected override void Dispose(bool disposing)
 		{

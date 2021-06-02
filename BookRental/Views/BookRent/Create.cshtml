@@ -139,6 +139,7 @@
 			var email = document.getElementById("email").value;
 			var rentalDuration = document.getElementById("ddlRentalDuration").value;
 			//var avail = document.getElementById("lblAvaibility").value;
+			var rentalprice = 0.0;
 			$.ajax({
 				url: '/api/BookAPI?type=avail&isbn=' + isbn,
 				type: 'GET',
@@ -165,6 +166,7 @@
 				type: 'GET',
 				dataType: 'json',
 				success: function (data, textStatus, xhr) {
+					rentalprice = data;
 					$('#lblRentalPrice').text(data)
 				},
 				error: function (xhr, textStatus, errorThrown) {
@@ -181,6 +183,12 @@
 					$('#birthDate').text(birthDate[0])
 					document.getElementById("btnAvailibility").style.display = 'none';
 					document.getElementById("nameAndDob").style.display = '';
+
+					var rentalcount = fields[2];
+					if (rentalcount == 10) {
+						$("#lblRentalPrice").text(rentalprice - (rentalprice * 20 / 100));
+						document.getElementById("lblDiscountDisplay").style.display = "";
+					}
 				},
 				error: function (xhr, textStatus, errorThrown) {
 				}

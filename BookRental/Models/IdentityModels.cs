@@ -15,6 +15,7 @@ namespace BookRental.Models
         public DateTime Birthdate{ get; set; }
         public bool Disable { get; set; }
         public int MembershipTypeId { get; set; }
+        public int RentalCount { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

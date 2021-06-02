@@ -28,6 +28,7 @@ namespace BookRental.Controllers
 			var rentalprice = 0.0;
 			var rentalPriceOneMonth = 0.0;
 			var rentalPriceSixMonth = 0.0;
+			var rentalCount = 0;
 			
 			if(user != null && !User.IsInRole("Admin"))
 			{
@@ -35,10 +36,11 @@ namespace BookRental.Controllers
 								 join m in db.MembershipTypes
 								 on u.MembershipTypeId equals m.Id
 								 where u.Id.Equals(userid)
-								 select new { m.ChargeRateOneMonth, m.ChargeRateSixMonth };  //this will join users and based on their memberships we 
+								 select new { m.ChargeRateOneMonth, m.ChargeRateSixMonth,u.RentalCount };  //this will join users and based on their memberships we 
 																							 // we retrieving their charge rate for one month and six month.
 				rentalPriceOneMonth = Convert.ToDouble(bookmodel.Price) * Convert.ToDouble(chargeRate.ToList()[0].ChargeRateOneMonth)/ 100;
 				rentalPriceSixMonth = Convert.ToDouble(bookmodel.Price) * Convert.ToDouble(chargeRate.ToList()[0].ChargeRateSixMonth) / 100;
+				rentalCount = Convert.ToInt32(chargeRate.ToList()[0].RentalCount);
 
 			}
 
@@ -62,6 +64,7 @@ namespace BookRental.Controllers
 				RentalPrice = rentalprice,
 				rentalPriceOneMonth = rentalPriceOneMonth,
 				rentalPriceSixMonth = rentalPriceSixMonth,
+				RentalCount = rentalCount,
 				Publisher = bookmodel.Publisher,
 			};
             return View(model);

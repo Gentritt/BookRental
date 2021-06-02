@@ -30,6 +30,7 @@ namespace BookRental.ViewModel
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString ="{0:MM dd yyyy}")]
 		public DateTime Birthdate { get; set; }
+		public int RentalCount { get; set; }
 
  	}
 }
