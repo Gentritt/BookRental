@@ -56,10 +56,13 @@ namespace BookRental.Controllers
         public ActionResult Create()
         {
             var genre = db.Genres.ToList();
+            Book book = new Book();
             var model = new BookViewModel
             {
-                Genres = genre
+                Genres = genre,
+                
             };
+            
             return View(model);
         }
 
@@ -77,7 +80,7 @@ namespace BookRental.Controllers
             {
                 Author = bookVm.Book.Author,
                 Avaliability = bookVm.Book.Avaliability,
-                DateAdded = DateTime.Now,
+                DateAdded = bookVm.Book.DateAdded,
                 Description = bookVm.Book.Description,
                 Publisher = bookVm.Book.Publisher,
                 GenreId = bookVm.Book.GenreId,

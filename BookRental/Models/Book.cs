@@ -31,7 +31,8 @@ namespace BookRental.Models
 		[DataType(DataType.Currency)]
 		public double Price { get; set; }
 		[Required]
-		[DisplayFormat(DataFormatString = "{0: MMM dd yyyy}")]
+		//[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0: MM dd yyyy}")]
 		public DateTime? DateAdded { get; set; }
 
 		[Required]
