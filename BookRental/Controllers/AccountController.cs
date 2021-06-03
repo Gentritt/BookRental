@@ -76,8 +76,17 @@ namespace BookRental.Controllers
                 return View(model);
             }
 
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var user = UserManager.FindByEmailAsync(model.Email).Result;
+
+            if(user.Disable == true)
+			{
+                ModelState.AddModelError("", "Your Account is Disabled");
+                return View("Login", model);
+			}
+            
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -148,7 +157,7 @@ namespace BookRental.Controllers
 			{
                 RegisterViewModel newUser = new RegisterViewModel
                 {
-                    MembershipTypes = db.MembershipTypes.ToList(),
+                    MembershipTypes = db.MembershipTypes.Where(m => !m.Name.ToLower().Equals("Admin".ToLower())).ToList(),
                     Birthdate = DateTime.Now
                 };
                 return View(newUser);
@@ -466,6 +475,8 @@ namespace BookRental.Controllers
             return View();
         }
 
+   
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

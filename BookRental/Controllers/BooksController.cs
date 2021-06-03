@@ -77,7 +77,7 @@ namespace BookRental.Controllers
             {
                 Author = bookVm.Book.Author,
                 Avaliability = bookVm.Book.Avaliability,
-                DateAdded = bookVm.Book.DateAdded,
+                DateAdded = DateTime.Now,
                 Description = bookVm.Book.Description,
                 Publisher = bookVm.Book.Publisher,
                 GenreId = bookVm.Book.GenreId,
