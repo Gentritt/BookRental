@@ -30,6 +30,7 @@ namespace BookRental
 					  "~/Content/test.css",
 					  "~/Content/thumbnail.css",
 					  "~/Content/Social.css",
+					  "~/Content/SocialFooter.css",
 					  "~/Content/BookDetail.css",
 					  "~/Content/typeahead.css",
 					  "~/Content/Site.css"));

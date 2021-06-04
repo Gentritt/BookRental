@@ -1,6 +1,16 @@
-﻿<link href="~/Content/SocialFooter.css" rel="stylesheet" />
-<footer class="footer">
+﻿@*<link href="~/Content/SocialFooter.css" rel="stylesheet" />
+	<footer class="footer" style="background-color:lightgray;">
+		<div class="container">
+			<p class="text-muted" style="color:black;">Place your sticky footer content here.</p>
+			<a class="btn btn-danger pull-right">GITHUB</a>
+		</div>
+	</footer>*@
+	<link href="~/Content/SocialFooter.css" rel="stylesheet" />
+
+<footer class="footer" style="background-color:lightgray;">
 	<div class="container">
-		<p class="text-muted">Place your sticky footer content here.</p>
+		<p class="text-muted" style="color:black; text-align:center; font-size:20px;">&copy; @DateTime.Now.Year BookRentAL-KS</p>
+		<p class="text-muted media-middle fa fa-envelope" style="color:black; font-size:19px; ">Contact me: gentselimi7@gmail.com</p>
+<span class="text-muted fab fa-linkedin fa-lg pull-right" style="color:blue;"><a href="https://www.linkedin.com/in/gentrit-selimi-088626196/" target="_blank" style="color:darkblue;">LINKEDIN</a></span>
 	</div>
 </footer>
