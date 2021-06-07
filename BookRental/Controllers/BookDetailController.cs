@@ -29,6 +29,7 @@ namespace BookRental.Controllers
 			var rentalPriceOneMonth = 0.0;
 			var rentalPriceSixMonth = 0.0;
 			var rentalCount = 0;
+			var addcharge = 0;
 			
 			if(user != null && !User.IsInRole("Admin"))
 			{
@@ -66,6 +67,7 @@ namespace BookRental.Controllers
 				rentalPriceSixMonth = rentalPriceSixMonth,
 				RentalCount = rentalCount,
 				Publisher = bookmodel.Publisher,
+				AdditionalCharge = addcharge
 			};
             return View(model);
         }

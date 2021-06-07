@@ -30,7 +30,8 @@
 							@Html.TextBoxFor(model => model.ISBN, new { id = "bookISBN", @class = "form-control" })
 							@Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
 						</div>
-					</div>
+						</div>
+	
 
 					@{ List<SelectListItem> listItem = new List<SelectListItem>();
 										listItem.Add(new SelectListItem
@@ -89,7 +90,7 @@
 						</div>
 					</div>
 
-				</div>}
+				</div>
 
 @section scripts{
 
@@ -196,5 +197,5 @@
 		});
 	</script>
 
-
+				}
 }

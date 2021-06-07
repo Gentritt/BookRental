@@ -82,7 +82,7 @@ namespace BookRental.Controllers
             return View(model.ToList().ToPagedList(pageNumber??1,5)); 
         }
 
-		public ActionResult Create(string title = null,int isbn = 0)
+		public ActionResult Create(string title = null,int isbn = 0, int additionalcharge = 0)
 		{
 			if(title != null && isbn !=0)
 			{
@@ -90,6 +90,7 @@ namespace BookRental.Controllers
 				{
 					Title = title,
 					ISBN = isbn,
+					AdditionalCharge = additionalcharge,
 				};
 			}
 			return View(new BookRentalViewModel());
@@ -103,7 +104,6 @@ namespace BookRental.Controllers
 			if (ModelState.IsValid)
 			{
 				var email = model.Email;
-
 				var userDetails = from u in db.Users
 								  where u.Email.Equals(email)
 								  select new { u.Id }; //gets the user details based on email;
@@ -152,7 +152,7 @@ namespace BookRental.Controllers
 				bookselected.Avaliability -= 1;
 				db.BookRents.Add(modeltoAdd);
 				db.SaveChanges();
-				return RedirectToAction("Index");
+				return RedirectToAction("Index","BookRent");
 
 
 			}
@@ -289,12 +289,13 @@ namespace BookRental.Controllers
 		{
 			if (model == null)
 				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-
+			var addcharge = 0;
 			if (ModelState.IsValid)
 			{
 				BookRent bookRent = db.BookRents.Find(model.Id);
 
 				bookRent.Status = BookRent.StatusEnum.Approved;
+				bookRent.AdditionalCharge = addcharge;
 
 				db.SaveChanges();
 			}
@@ -432,11 +433,13 @@ namespace BookRental.Controllers
 		}
 		private BookRentalViewModel getVM(BookRent book)
 		{
+
+
 			Book selectedBook = db.Books.Where(b => b.Id == book.BookId).FirstOrDefault();
 			var userDetails = from u in db.Users
 							  where u.Id.Equals(book.UserId)
 							  select new { u.Id, u.Firstname, u.Lastname,u.Birthdate, u.Email };
-
+			var addcharge = 0;
 			BookRentalViewModel model = new BookRentalViewModel
 			{
 				Id = book.Id,
@@ -464,7 +467,7 @@ namespace BookRental.Controllers
 				Status = book.Status.ToString(),
 				Title = selectedBook.Title,
 				UserId = userDetails.ToList()[0].Id,
-				AdditionalCharge = book.AdditionalCharge
+				AdditionalCharge = addcharge
 			};
 			return model;
 		}

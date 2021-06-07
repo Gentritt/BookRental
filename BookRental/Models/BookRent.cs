@@ -8,6 +8,8 @@ namespace BookRental.Models
 {
 	public class BookRent
 	{
+		private double x = 0;
+
 		[Required]
 		public int Id { get; set; }
 		[Required]
@@ -19,7 +21,8 @@ namespace BookRental.Models
 		public DateTime? StartDate { get; set; }
 		public DateTime? ActualEndDate { get; set; }
 		public DateTime? ScheduleEndDate { get; set; }
-		public double? AdditionalCharge { get; set; }
+		//public double? AdditionalCharge { get { return x; } set { this.x = AdditionalCharge.Value; } }
+		public double? AdditionalCharge { get; set; } = 0;
 		[Required]
 		public double Price { get; set; }
 		[Required]

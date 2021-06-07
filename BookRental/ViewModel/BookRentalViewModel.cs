@@ -10,7 +10,7 @@ namespace BookRental.ViewModel
 {
 	public class BookRentalViewModel
 	{
-
+		private double x = 0;
 		//Book Details
 		public int Id { get; set; }
 		public int BookId { get; set; }
@@ -56,7 +56,14 @@ namespace BookRental.ViewModel
 		[Display(Name = "Additional Charge")]
 		[RegularExpression("^[0-9]*$", ErrorMessage = "AddCharge must be numeric")]
 		[Required]
-		public double? AdditionalCharge { get; set; }
+		public double? AdditionalCharge { get; set; } = 0;
+		//public double? AdditionalCharge { get {
+		//		return x;
+		//	}
+		//	set
+		//	{
+		//		x =(Double)value;
+		//	} }
 
 		[Display(Name = "Price")]
 		public double RentalPrice { get; set; }

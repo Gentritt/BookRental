@@ -120,10 +120,10 @@
 					}
 					else
 					{
-						if (User.IsInRole("admin") && Model.Avaliability == 0)
+						if (User.IsInRole("Admin") && Model.Avaliability == 0)
 						{
 							//admin user with book not avaliable
-							<button type="submit" class="btn disabled btn-danger">
+							<button type="submit" class="btn disabled btn-danger" disabled>
 								<span class="glyphicon glyphicon glyphicon-thumbs-down">Unavaliable</span>
 							</button>
 						}
