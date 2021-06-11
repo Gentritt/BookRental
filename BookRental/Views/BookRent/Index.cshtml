@@ -10,14 +10,18 @@
 {
 
 <div class="row">
-    <div class="col-sm-4 ">
-        <h3>Book Rental Portal</h3>
-        @if (User.IsInRole("Admin"))
+	<div class="col-sm-4 ">
+		<h3>Book Rental Portal</h3>
+		@if (User.IsInRole("Admin"))
 		{
-            <p>@Html.Partial("_CreateButtonPartial")</p>
+			<a type="button" class="btn btn-success btn-sm" href="@Url.Action("Create")">
+
+				<span class="glyphicon glyphicon-plus"></span>
+				<span>Create New Rental</span>
+			</a>
 		}
-        
-    </div>
+
+	</div>
     <div class="col-sm-8">
 		<br />
 		<div class="row">
@@ -163,7 +167,7 @@
 		else
 		{
 			if ((item.Status.ToString().ToLower().Equals("requested") && (User.IsInRole("Customer"))) ||
-			(User.IsInRole("Admin") && !item.Status.ToString().ToLower().Equals("closed")))
+			(User.IsInRole("Admin") && item.Status.ToString().ToLower().Equals("closed") || item.Status.ToString().ToLower().Equals("rejected")))
 			{
 				@Html.Partial("_PartialButtons", new PartialButtons
 		   {

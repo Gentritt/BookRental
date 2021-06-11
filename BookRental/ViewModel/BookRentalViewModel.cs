@@ -57,13 +57,6 @@ namespace BookRental.ViewModel
 		[RegularExpression("^[0-9]*$", ErrorMessage = "AddCharge must be numeric")]
 		[Required]
 		public double? AdditionalCharge { get; set; } = 0;
-		//public double? AdditionalCharge { get {
-		//		return x;
-		//	}
-		//	set
-		//	{
-		//		x =(Double)value;
-		//	} }
 
 		[Display(Name = "Price")]
 		public double RentalPrice { get; set; }
