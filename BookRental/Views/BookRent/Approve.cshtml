@@ -7,7 +7,7 @@
 {
 	@Html.AntiForgeryToken()
 
-	<fieldset disabled>
+	@*<fieldset disabled>*@
 		<h3>BookRent Approve</h3>
 
 		<div class="row" style="border:1px solid #bbb9b9; border-radius:5px;">
@@ -94,7 +94,7 @@
 						@Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label" })
 					</div>
 					<div class="col-sm-9">
-						@Html.TextBoxFor(m => m.Email, new { @class = "form-control", enabled = "false" })
+						@Html.TextBoxFor(m => m.Email, new { @class = "form-control", enabled = "true" })
 					</div>
 				</div>
 
@@ -105,7 +105,7 @@
 				</div>
 			</div>
 		</div>
-	</fieldset>
+	@*</fieldset>*@
 	<br />
 	<p>
 		@Html.Partial("_BackToListButtonPartial")

@@ -99,7 +99,7 @@ namespace BookRental.Controllers
 		//Post Action
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create(BookRentalViewModel model)
+		public ActionResult Create(BookRentalViewModel model) //Admin reserving the book for user
 		{
 			if (ModelState.IsValid)
 			{
@@ -159,7 +159,7 @@ namespace BookRental.Controllers
 			return View();
 		}
 		[HttpPost]
-		public ActionResult Reserve(BookRentalViewModel book)
+		public ActionResult Reserve(BookRentalViewModel book) // User Reserving the book
 		{
 
 			var userid = User.Identity.GetUserId();
@@ -253,7 +253,8 @@ namespace BookRental.Controllers
 				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
 			}
-			if (ModelState.IsValid) { 
+			if (ModelState.IsValid) 
+			{ 
 			BookRent bookRent = db.BookRents.Find(book.Id);
 			bookRent.Status = BookRent.StatusEnum.Rejected;
 				var userInDb = db.Users.SingleOrDefault(c => c.Id == bookRent.UserId);
@@ -285,17 +286,19 @@ namespace BookRental.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Approve(BookRentalViewModel model)
+		public ActionResult Approve(BookRentalViewModel book)
 		{
-			if (model == null)
+			if (book == null)
 				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 			var addcharge = 0;
+			var date = DateTime.Now;
 			if (ModelState.IsValid)
 			{
-				BookRent bookRent = db.BookRents.Find(model.Id);
+				BookRent bookRent = db.BookRents.Find(book.Id);
 
 				bookRent.Status = BookRent.StatusEnum.Approved;
 				bookRent.AdditionalCharge = addcharge;
+				bookRent.StartDate = date;
 
 				db.SaveChanges();
 			}
@@ -467,7 +470,7 @@ namespace BookRental.Controllers
 				Status = book.Status.ToString(),
 				Title = selectedBook.Title,
 				UserId = userDetails.ToList()[0].Id,
-				AdditionalCharge = addcharge
+				AdditionalCharge = book.AdditionalCharge
 			};
 			return model;
 		}

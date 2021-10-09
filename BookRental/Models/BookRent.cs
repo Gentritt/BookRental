@@ -18,7 +18,7 @@ namespace BookRental.Models
 		public int BookId { get; set; }
 
 
-		public DateTime? StartDate { get; set; }
+		public DateTime? StartDate { get; set; } = DateTime.Now;
 		public DateTime? ActualEndDate { get; set; }
 		public DateTime? ScheduleEndDate { get; set; }
 		//public double? AdditionalCharge { get { return x; } set { this.x = AdditionalCharge.Value; } }

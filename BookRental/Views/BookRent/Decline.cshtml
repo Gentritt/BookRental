@@ -7,7 +7,7 @@
 {
 	@Html.AntiForgeryToken()
 
-	<fieldset disabled>
+	@*<fieldset disabled>*@
 		<h3>BookRent Decline</h3>
 
 		<div class="row" style="border:1px solid #bbb9b9; border-radius:5px;">
@@ -105,7 +105,7 @@
 				</div>
 			</div>
 		</div>
-	</fieldset>
+	@*</fieldset>*@
 	<br />
 	<p>@Html.Partial("_BackToListButtonPartial")
 	<input type="submit" value="Decline" id="btnSubmit" class="btn btn-sm btn-danger" />
